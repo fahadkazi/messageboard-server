@@ -1,6 +1,5 @@
-import { Arg, InputType, Int, Mutation, Query, Resolver } from 'type-graphql'
+import { Arg, InputType, Int, Mutation, Query, Resolver, Subscription, PubSub, PubSubEngine, Root } from 'type-graphql'
 import { Message } from '../entities/Message'
-
 @InputType()
 @Resolver(Message)
 export class MessageResolver {
@@ -15,8 +14,10 @@ export class MessageResolver {
   }
 
   @Mutation(() => Message)
-  async createMessage(@Arg('text') text: string): Promise<Message> {
-    return Message.create({ text }).save()
+  async createMessage(@Arg('text') text: string, @PubSub() pubSub: PubSubEngine): Promise<Message> {
+    const message = await Message.create({ text }).save()
+    await pubSub.publish('MESSAGE_CREATED', message)
+    return message
   }
 
   @Mutation(() => Message, { nullable: true })
@@ -35,5 +36,10 @@ export class MessageResolver {
   async deleteMessage(@Arg('_id', () => Int) _id: number): Promise<boolean> {
     await Message.delete(_id)
     return true
+  }
+
+  @Subscription({ topics: 'MESSAGE_CREATED' })
+  messageSent(@Root() message: Message): Message {
+    return message
   }
 }
