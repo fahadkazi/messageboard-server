@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc -w",
+    "build": "tsc",
     "dev": "nodemon dist/index.js",
     "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
     "update-database": "ts-node ./node_modules/typeorm/cli.js migration:run"

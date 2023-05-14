@@ -23,7 +23,7 @@ const main = async () => {
       validate: false,
     }),
     subscriptions: {
-      path: '/subscriptions',
+      path: '/messages/subscriptions',
       onConnect: () => {
         console.log('Client connected for subscriptions')
       },
