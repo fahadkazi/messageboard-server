@@ -7,11 +7,6 @@ image:
   tag: 0.0.1
   pullPolicy: IfNotPresent
 
-metaconfig:
-
-# Service level configs
-extraconfig: # List service level config
-
 # Make this true only if you have extrasecrets, the data of which is managed seperately by authorize personnel
 extrasecrets: false
 

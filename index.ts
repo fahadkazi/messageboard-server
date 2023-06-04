@@ -35,6 +35,14 @@ const main = async () => {
       req,
       res,
     }),
+    playground: {
+      tabs: [
+        {
+          endpoint: '/messages/graphql',
+        },
+      ],
+    },
+    introspection: true,
   })
 
   apolloServer.applyMiddleware({
